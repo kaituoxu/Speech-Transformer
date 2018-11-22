@@ -1,0 +1,254 @@
+{
+    "utts": {
+        "20040503_222707_A000687_B000688-A-000000-000477": {
+            "input": [
+                {
+                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:48", 
+                    "name": "input1", 
+                    "shape": [
+                        475, 
+                        83
+                    ]
+                }
+            ], 
+            "output": [
+                {
+                    "name": "target1", 
+                    "shape": [
+                        7, 
+                        3655
+                    ], 
+                    "text": "喂喂你叫什么名", 
+                    "token": "喂 喂 你 叫 什 么 名", 
+                    "tokenid": "640 640 190 491 123 71 513"
+                }
+            ], 
+            "utt2spk": "20040503_222707_A000687_B000688-A"
+        }, 
+        "20040503_222707_A000687_B000688-A-000656-001110": {
+            "input": [
+                {
+                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:40206", 
+                    "name": "input1", 
+                    "shape": [
+                        452, 
+                        83
+                    ]
+                }
+            ], 
+            "output": [
+                {
+                    "name": "target1", 
+                    "shape": [
+                        10, 
+                        3655
+                    ], 
+                    "text": "[LAUGHTER]王保文啊你是我姓曾", 
+                    "token": "[LAUGHTER] 王 保 文 啊 你 是 我 姓 曾", 
+                    "tokenid": "28 2140 220 1514 629 190 1570 1281 852 1601"
+                }
+            ], 
+            "utt2spk": "20040503_222707_A000687_B000688-A"
+        }, 
+        "20040503_222707_A000687_B000688-A-001110-001533": {
+            "input": [
+                {
+                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:78455", 
+                    "name": "input1", 
+                    "shape": [
+                        421, 
+                        83
+                    ]
+                }
+            ], 
+            "output": [
+                {
+                    "name": "target1", 
+                    "shape": [
+                        6, 
+                        3655
+                    ], 
+                    "text": "我姓曾嗯是啊", 
+                    "token": "我 姓 曾 嗯 是 啊", 
+                    "tokenid": "1281 852 1601 664 1570 629"
+                }
+            ], 
+            "utt2spk": "20040503_222707_A000687_B000688-A"
+        }, 
+        "20040503_222707_A000687_B000688-A-001533-001915": {
+            "input": [
+                {
+                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:114131", 
+                    "name": "input1", 
+                    "shape": [
+                        380, 
+                        83
+                    ]
+                }
+            ], 
+            "output": [
+                {
+                    "name": "target1", 
+                    "shape": [
+                        6, 
+                        3655
+                    ], 
+                    "text": "啊住在哪里呀", 
+                    "token": "啊 住 在 哪 里 呀", 
+                    "tokenid": "629 181 718 606 3326 541"
+                }
+            ], 
+            "utt2spk": "20040503_222707_A000687_B000688-A"
+        }, 
+        "20040503_222707_A000687_B000688-A-001915-002472": {
+            "input": [
+                {
+                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:146404", 
+                    "name": "input1", 
+                    "shape": [
+                        555, 
+                        83
+                    ]
+                }
+            ], 
+            "output": [
+                {
+                    "name": "target1", 
+                    "shape": [
+                        8, 
+                        3655
+                    ], 
+                    "text": "学校呀在什么学校", 
+                    "token": "学 校 呀 在 什 么 学 校", 
+                    "tokenid": "908 1688 541 718 123 71 908 1688"
+                }
+            ], 
+            "utt2spk": "20040503_222707_A000687_B000688-A"
+        }, 
+        "20040503_222707_A000687_B000688-A-002472-003202": {
+            "input": [
+                {
+                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:193202", 
+                    "name": "input1", 
+                    "shape": [
+                        728, 
+                        83
+                    ]
+                }
+            ], 
+            "output": [
+                {
+                    "name": "target1", 
+                    "shape": [
+                        17, 
+                        3655
+                    ], 
+                    "text": "深圳大学呀那环境一定很好了不错啊[LAUGHTER]", 
+                    "token": "深 圳 大 学 呀 那 环 境 一 定 很 好 了 不 错 啊 [LAUGHTER]", 
+                    "tokenid": "1926 720 796 908 541 3285 2146 771 32 924 1153 827 94 40 3375 629 28"
+                }
+            ], 
+            "utt2spk": "20040503_222707_A000687_B000688-A"
+        }, 
+        "20040503_222707_A000687_B000688-A-003202-003670": {
+            "input": [
+                {
+                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:254359", 
+                    "name": "input1", 
+                    "shape": [
+                        466, 
+                        83
+                    ]
+                }
+            ], 
+            "output": [
+                {
+                    "name": "target1", 
+                    "shape": [
+                        14, 
+                        3655
+                    ], 
+                    "text": "少一点女生你读的是什么学院啊", 
+                    "token": "少 一 点 女 生 你 读 的 是 什 么 学 院 啊", 
+                    "tokenid": "970 32 2031 821 2191 190 3049 2251 1570 123 71 908 3437 629"
+                }
+            ], 
+            "utt2spk": "20040503_222707_A000687_B000688-A"
+        }, 
+        "20040503_222707_A000687_B000688-A-003670-004193": {
+            "input": [
+                {
+                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:293770", 
+                    "name": "input1", 
+                    "shape": [
+                        521, 
+                        83
+                    ]
+                }
+            ], 
+            "output": [
+                {
+                    "name": "target1", 
+                    "shape": [
+                        8, 
+                        3655
+                    ], 
+                    "text": "工程啊挺好呀[NOISE][LAUGHTER]", 
+                    "token": "工 程 啊 挺 好 呀 [NOISE] [LAUGHTER]", 
+                    "tokenid": "1039 2399 629 1396 827 541 29 28"
+                }
+            ], 
+            "utt2spk": "20040503_222707_A000687_B000688-A"
+        }, 
+        "20040503_222707_A000687_B000688-A-004502-005015": {
+            "input": [
+                {
+                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:337746", 
+                    "name": "input1", 
+                    "shape": [
+                        511, 
+                        83
+                    ]
+                }
+            ], 
+            "output": [
+                {
+                    "name": "target1", 
+                    "shape": [
+                        7, 
+                        3655
+                    ], 
+                    "text": "[LAUGHTER]先聊下手机吧", 
+                    "token": "[LAUGHTER] 先 聊 下 手 机 吧", 
+                    "tokenid": "28 277 2633 39 1296 1622 526"
+                }
+            ], 
+            "utt2spk": "20040503_222707_A000687_B000688-A"
+        }, 
+        "20040503_222707_A000687_B000688-A-005015-005503": {
+            "input": [
+                {
+                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:380892", 
+                    "name": "input1", 
+                    "shape": [
+                        486, 
+                        83
+                    ]
+                }
+            ], 
+            "output": [
+                {
+                    "name": "target1", 
+                    "shape": [
+                        1, 
+                        3655
+                    ], 
+                    "text": "好", 
+                    "token": "好", 
+                    "tokenid": "827"
+                }
+            ], 
+            "utt2spk": "20040503_222707_A000687_B000688-A"
+	}
+    }
+}

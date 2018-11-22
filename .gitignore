@@ -1,0 +1,15 @@
+*.pyc
+
+src/utils/kaldi_io.py
+
+tools/kaldi-io-for-python/
+tools/kaldi
+
+egs/*/data
+egs/*/dump
+egs/*/fbank
+egs/*/exp
+
+.nfs*
+.vscode
+__pycache__
