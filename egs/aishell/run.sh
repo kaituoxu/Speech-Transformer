@@ -9,6 +9,8 @@ dumpdir=dump   # directory to dump full features
 
 # Feature configuration
 do_delta=false
+LFR_m=4  # Low Frame Rate: number of frames to stack
+LFR_n=3  # Low Frame Rate: number of frames to skip
 
 # Network architecture
 # Encoder
@@ -28,7 +30,7 @@ tgt_emb_prj_weight_sharing=1
 
 # Training config
 epochs=20
-batch_size=8
+batch_size=16
 maxlen_in=800
 maxlen_out=150
 warmup_steps=4000
@@ -117,7 +119,7 @@ if [ $stage -le 2 ]; then
 fi
 
 if [ -z ${tag} ]; then
-    expdir=exp/train_in${einput}_elayer${n_layers_enc}_head${n_head}_k${d_k}_v${d_v}_model${d_model}_inner${d_inner}_drop${dropout}_pe${pe_maxlen}_emb${d_word_vec}_dlayer${n_layers_dec}_share${tgt_emb_prj_weight_sharing}_epoch${epochs}_bs${batch_size}_mli${maxlen_in}_mlo${maxlen_out}_warm${warmup_steps}
+    expdir=exp/train_m${LFR_m}_n${LFR_n}_in${einput}_elayer${n_layers_enc}_head${n_head}_k${d_k}_v${d_v}_model${d_model}_inner${d_inner}_drop${dropout}_pe${pe_maxlen}_emb${d_word_vec}_dlayer${n_layers_dec}_share${tgt_emb_prj_weight_sharing}_epoch${epochs}_bs${batch_size}_mli${maxlen_in}_mlo${maxlen_out}_warm${warmup_steps}
     if ${do_delta}; then
         expdir=${expdir}_delta
     fi
@@ -133,6 +135,8 @@ if [ ${stage} -le 3 ]; then
         --train-json ${feat_train_dir}/data.json \
         --valid-json ${feat_dev_dir}/data.json \
         --dict ${dict} \
+        --LFR_m ${LFR_m} \
+        --LFR_n ${LFR_n} \
         --d_input $d_input \
         --n_layers_enc $n_layers_enc \
         --n_head $n_head \

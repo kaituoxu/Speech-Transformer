@@ -70,13 +70,23 @@ class AudioDataLoader(data.DataLoader):
     NOTE: just use batchsize=1 here, so drop_last=True makes no sense here.
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, LFR_m=1, LFR_n=1, **kwargs):
         super(AudioDataLoader, self).__init__(*args, **kwargs)
-        self.collate_fn = _collate_fn
+        self.collate_fn = LFRCollate(LFR_m=LFR_m, LFR_n=LFR_n)
+
+
+class LFRCollate(object):
+    """Build this wrapper to pass arguments(LFR_m, LFR_n) to _collate_fn"""
+    def __init__(self, LFR_m=1, LFR_n=1):
+        self.LFR_m = LFR_m
+        self.LFR_n = LFR_n
+
+    def __call__(self, batch):
+        return _collate_fn(batch, LFR_m=self.LFR_m, LFR_n=self.LFR_n)
 
 
 # From: espnet/src/asr/asr_pytorch.py: CustomConverter:__call__
-def _collate_fn(batch):
+def _collate_fn(batch, LFR_m=1, LFR_n=1):
     """
     Args:
         batch: list, len(batch) = 1. See AudioDataset.__getitem__()
@@ -87,7 +97,7 @@ def _collate_fn(batch):
     """
     # batch should be located in list
     assert len(batch) == 1
-    batch = load_inputs_and_targets(batch[0])
+    batch = load_inputs_and_targets(batch[0], LFR_m=LFR_m, LFR_n=LFR_n)
     xs, ys = batch
 
     # TODO: perform subsamping
@@ -103,13 +113,16 @@ def _collate_fn(batch):
 
 
 # ------------------------------ utils ------------------------------------
-def load_inputs_and_targets(batch):
+def load_inputs_and_targets(batch, LFR_m=1, LFR_n=1):
     # From: espnet/src/asr/asr_utils.py: load_inputs_and_targets
     # load acoustic features and target sequence of token ids
     # for b in batch:
     #     print(b[1]['input'][0]['feat'])
     xs = [kaldi_io.read_mat(b[1]['input'][0]['feat']) for b in batch]
     ys = [b[1]['output'][0]['tokenid'].split() for b in batch]
+
+    if LFR_m != 1 or LFR_n != 1:
+        xs = build_LFR_features(xs, LFR_m, LFR_n)
 
     # get index of non-zero length samples
     nonzero_idx = filter(lambda i: len(ys[i]) > 0, range(len(xs)))
@@ -124,3 +137,34 @@ def load_inputs_and_targets(batch):
           for i in nonzero_sorted_idx]
 
     return xs, ys
+
+
+def build_LFR_features(inputs_batch, m, n):
+    """
+    Actually, this implements stacking frames and skipping frames.
+    if m = 1 and n = 1, just return the origin features.
+    if m = 1 and n > 1, it works like skipping.
+    if m > 1 and n = 1, it works like stacking but only support right frames.
+    if m > 1 and n > 1, it works like LFR.
+
+    Args:
+        inputs_batch: list, [inputs1, inputs2, ...], inputsX is T x D np.ndarray
+        m: number of frames to stack
+        n: number of frames to skip
+    """
+    LFR_inputs_batch = []
+    for inputs in inputs_batch:
+        LFR_inputs = []
+        T = inputs.shape[0]
+        T_lfr = int(np.ceil(T / n))
+        for i in range(T_lfr):
+            if m <= T - i * n:
+                LFR_inputs.append(np.hstack(inputs[i*n:i*n+m]))
+            else: # process last LFR frame
+                num_padding = m - (T - i * n)
+                frame = np.hstack(inputs[i*n:])
+                for _ in range(num_padding):
+                    frame = np.hstack((frame, inputs[-1]))
+                LFR_inputs.append(frame)
+        LFR_inputs_batch.append(np.vstack(LFR_inputs))
+    return LFR_inputs_batch

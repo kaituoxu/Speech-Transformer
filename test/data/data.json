@@ -1,13 +1,13 @@
 {
     "utts": {
-        "20040503_222707_A000687_B000688-A-000000-000477": {
+        "BAC009S0724W0121": {
             "input": [
                 {
-                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:48", 
+                    "feat": "/home/ktxu/workspace/project/End2EndASR/egs/aishell/dump/dev/deltafalse/feats.1.ark:17", 
                     "name": "input1", 
                     "shape": [
-                        475, 
-                        83
+                        426, 
+                        80
                     ]
                 }
             ], 
@@ -15,24 +15,24 @@
                 {
                     "name": "target1", 
                     "shape": [
-                        7, 
-                        3655
+                        12, 
+                        4233
                     ], 
-                    "text": "喂喂你叫什么名", 
-                    "token": "喂 喂 你 叫 什 么 名", 
-                    "tokenid": "640 640 190 491 123 71 513"
+                    "text": "广州市房地产中介协会分析", 
+                    "token": "广 州 市 房 地 产 中 介 协 会 分 析", 
+                    "tokenid": "1157 1105 1122 1394 723 86 31 104 434 140 339 1790"
                 }
             ], 
-            "utt2spk": "20040503_222707_A000687_B000688-A"
+            "utt2spk": "S0724"
         }, 
-        "20040503_222707_A000687_B000688-A-000656-001110": {
+        "BAC009S0724W0122": {
             "input": [
                 {
-                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:40206", 
+                    "feat": "/home/ktxu/workspace/project/End2EndASR/egs/aishell/dump/dev/deltafalse/feats.1.ark:34775", 
                     "name": "input1", 
                     "shape": [
-                        452, 
-                        83
+                        432, 
+                        80
                     ]
                 }
             ], 
@@ -40,24 +40,24 @@
                 {
                     "name": "target1", 
                     "shape": [
-                        10, 
-                        3655
+                        13, 
+                        4233
                     ], 
-                    "text": "[LAUGHTER]王保文啊你是我姓曾", 
-                    "token": "[LAUGHTER] 王 保 文 啊 你 是 我 姓 曾", 
-                    "tokenid": "28 2140 220 1514 629 190 1570 1281 852 1601"
+                    "text": "广州市房地产中介协会还表示", 
+                    "token": "广 州 市 房 地 产 中 介 协 会 还 表 示", 
+                    "tokenid": "1157 1105 1122 1394 723 86 31 104 434 140 3703 3372 2688"
                 }
             ], 
-            "utt2spk": "20040503_222707_A000687_B000688-A"
+            "utt2spk": "S0724"
         }, 
-        "20040503_222707_A000687_B000688-A-001110-001533": {
+        "BAC009S0724W0123": {
             "input": [
                 {
-                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:78455", 
+                    "feat": "/home/ktxu/workspace/project/End2EndASR/egs/aishell/dump/dev/deltafalse/feats.1.ark:70013", 
                     "name": "input1", 
                     "shape": [
-                        421, 
-                        83
+                        322, 
+                        80
                     ]
                 }
             ], 
@@ -65,24 +65,24 @@
                 {
                     "name": "target1", 
                     "shape": [
-                        6, 
-                        3655
+                        9, 
+                        4233
                     ], 
-                    "text": "我姓曾嗯是啊", 
-                    "token": "我 姓 曾 嗯 是 啊", 
-                    "tokenid": "1281 852 1601 664 1570 629"
+                    "text": "相比于其他一线城市", 
+                    "token": "相 比 于 其 他 一 线 城 市", 
+                    "tokenid": "2581 1970 72 282 111 3 2886 765 1122"
                 }
             ], 
-            "utt2spk": "20040503_222707_A000687_B000688-A"
+            "utt2spk": "S0724"
         }, 
-        "20040503_222707_A000687_B000688-A-001533-001915": {
+        "BAC009S0724W0124": {
             "input": [
                 {
-                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:114131", 
+                    "feat": "/home/ktxu/workspace/project/End2EndASR/egs/aishell/dump/dev/deltafalse/feats.1.ark:96451", 
                     "name": "input1", 
                     "shape": [
-                        380, 
-                        83
+                        547, 
+                        80
                     ]
                 }
             ], 
@@ -90,24 +90,24 @@
                 {
                     "name": "target1", 
                     "shape": [
-                        6, 
-                        3655
+                        16, 
+                        4233
                     ], 
-                    "text": "啊住在哪里呀", 
-                    "token": "啊 住 在 哪 里 呀", 
-                    "tokenid": "629 181 718 606 3326 541"
+                    "text": "广州二手住宅市场表现一直相对稳健", 
+                    "token": "广 州 二 手 住 宅 市 场 表 现 一 直 相 对 稳 健", 
+                    "tokenid": "1157 1105 71 1399 160 959 1122 725 3372 2409 3 2580 2581 1012 2746 237"
                 }
             ], 
-            "utt2spk": "20040503_222707_A000687_B000688-A"
+            "utt2spk": "S0724"
         }, 
-        "20040503_222707_A000687_B000688-A-001915-002472": {
+        "BAC009S0724W0125": {
             "input": [
                 {
-                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:146404", 
+                    "feat": "/home/ktxu/workspace/project/End2EndASR/egs/aishell/dump/dev/deltafalse/feats.1.ark:140889", 
                     "name": "input1", 
                     "shape": [
-                        555, 
-                        83
+                        385, 
+                        80
                     ]
                 }
             ], 
@@ -115,24 +115,24 @@
                 {
                     "name": "target1", 
                     "shape": [
-                        8, 
-                        3655
+                        12, 
+                        4233
                     ], 
-                    "text": "学校呀在什么学校", 
-                    "token": "学 校 呀 在 什 么 学 校", 
-                    "tokenid": "908 1688 541 718 123 71 908 1688"
+                    "text": "而在股市大幅震荡的环境下", 
+                    "token": "而 在 股 市 大 幅 震 荡 的 环 境 下", 
+                    "tokenid": "2996 719 3031 1122 815 1144 4016 3202 2554 2408 787 10"
                 }
             ], 
-            "utt2spk": "20040503_222707_A000687_B000688-A"
+            "utt2spk": "S0724"
         }, 
-        "20040503_222707_A000687_B000688-A-002472-003202": {
+        "BAC009S0724W0126": {
             "input": [
                 {
-                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:193202", 
+                    "feat": "/home/ktxu/workspace/project/End2EndASR/egs/aishell/dump/dev/deltafalse/feats.1.ark:172367", 
                     "name": "input1", 
                     "shape": [
-                        728, 
-                        83
+                        657, 
+                        80
                     ]
                 }
             ], 
@@ -140,24 +140,24 @@
                 {
                     "name": "target1", 
                     "shape": [
-                        17, 
-                        3655
+                        20, 
+                        4233
                     ], 
-                    "text": "深圳大学呀那环境一定很好了不错啊[LAUGHTER]", 
-                    "token": "深 圳 大 学 呀 那 环 境 一 定 很 好 了 不 错 啊 [LAUGHTER]", 
-                    "tokenid": "1926 720 796 908 541 3285 2146 771 32 924 1153 827 94 40 3375 629 28"
+                    "text": "预计第三季度将陆续有部分股市资金重归楼市", 
+                    "token": "预 计 第 三 季 度 将 陆 续 有 部 分 股 市 资 金 重 归 楼 市", 
+                    "tokenid": "4066 3439 2800 8 948 1173 1019 3963 2913 1743 3793 339 3031 1122 3571 3832 3829 1209 1892 1122"
                 }
             ], 
-            "utt2spk": "20040503_222707_A000687_B000688-A"
+            "utt2spk": "S0724"
         }, 
-        "20040503_222707_A000687_B000688-A-003202-003670": {
+        "BAC009S0724W0127": {
             "input": [
                 {
-                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:254359", 
+                    "feat": "/home/ktxu/workspace/project/End2EndASR/egs/aishell/dump/dev/deltafalse/feats.1.ark:225605", 
                     "name": "input1", 
                     "shape": [
-                        466, 
-                        83
+                        537, 
+                        80
                     ]
                 }
             ], 
@@ -165,24 +165,24 @@
                 {
                     "name": "target1", 
                     "shape": [
-                        14, 
-                        3655
+                        16, 
+                        4233
                     ], 
-                    "text": "少一点女生你读的是什么学院啊", 
-                    "token": "少 一 点 女 生 你 读 的 是 什 么 学 院 啊", 
-                    "tokenid": "970 32 2031 821 2191 190 3049 2251 1570 123 71 908 3437 629"
+                    "text": "但受穗六条及二套房首付七成的制约", 
+                    "token": "但 受 穗 六 条 及 二 套 房 首 付 七 成 的 制 约", 
+                    "tokenid": "157 490 2752 276 1778 483 71 839 1394 4116 113 5 1380 2554 357 2870"
                 }
             ], 
-            "utt2spk": "20040503_222707_A000687_B000688-A"
+            "utt2spk": "S0724"
         }, 
-        "20040503_222707_A000687_B000688-A-003670-004193": {
+        "BAC009S0724W0128": {
             "input": [
                 {
-                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:293770", 
+                    "feat": "/home/ktxu/workspace/project/End2EndASR/egs/aishell/dump/dev/deltafalse/feats.1.ark:269243", 
                     "name": "input1", 
                     "shape": [
-                        521, 
-                        83
+                        726, 
+                        80
                     ]
                 }
             ], 
@@ -190,24 +190,24 @@
                 {
                     "name": "target1", 
                     "shape": [
-                        8, 
-                        3655
+                        23, 
+                        4233
                     ], 
-                    "text": "工程啊挺好呀[NOISE][LAUGHTER]", 
-                    "token": "工 程 啊 挺 好 呀 [NOISE] [LAUGHTER]", 
-                    "tokenid": "1039 2399 629 1396 827 541 29 28"
+                    "text": "下半年楼市能是否能回到快速上升通道依然存在变数", 
+                    "token": "下 半 年 楼 市 能 是 否 能 回 到 快 速 上 升 通 道 依 然 存 在 变 数", 
+                    "tokenid": "10 432 1150 1892 1122 3066 1695 537 3066 704 356 1259 3738 9 429 3734 3754 186 2304 941 719 491 1637"
                 }
             ], 
-            "utt2spk": "20040503_222707_A000687_B000688-A"
+            "utt2spk": "S0724"
         }, 
-        "20040503_222707_A000687_B000688-A-004502-005015": {
+        "BAC009S0724W0129": {
             "input": [
                 {
-                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:337746", 
+                    "feat": "/home/ktxu/workspace/project/End2EndASR/egs/aishell/dump/dev/deltafalse/feats.1.ark:328001", 
                     "name": "input1", 
                     "shape": [
-                        511, 
-                        83
+                        351, 
+                        80
                     ]
                 }
             ], 
@@ -215,24 +215,24 @@
                 {
                     "name": "target1", 
                     "shape": [
-                        7, 
-                        3655
+                        9, 
+                        4233
                     ], 
-                    "text": "[LAUGHTER]先聊下手机吧", 
-                    "token": "[LAUGHTER] 先 聊 下 手 机 吧", 
-                    "tokenid": "28 277 2633 39 1296 1622 526"
+                    "text": "其中越秀区涨幅领先", 
+                    "token": "其 中 越 秀 区 涨 幅 领 先", 
+                    "tokenid": "282 31 3598 2718 423 2124 1144 4068 262"
                 }
             ], 
-            "utt2spk": "20040503_222707_A000687_B000688-A"
+            "utt2spk": "S0724"
         }, 
-        "20040503_222707_A000687_B000688-A-005015-005503": {
+        "BAC009S0724W0130": {
             "input": [
                 {
-                    "feat": "/home/ktxu/workspace/espnet/egs/hkust/asr1/dump/dev/deltafalse/feats.1.ark:380892", 
+                    "feat": "/home/ktxu/workspace/project/End2EndASR/egs/aishell/dump/dev/deltafalse/feats.1.ark:356759", 
                     "name": "input1", 
                     "shape": [
-                        486, 
-                        83
+                        739, 
+                        80
                     ]
                 }
             ], 
@@ -240,15 +240,15 @@
                 {
                     "name": "target1", 
                     "shape": [
-                        1, 
-                        3655
+                        23, 
+                        4233
                     ], 
-                    "text": "好", 
-                    "token": "好", 
-                    "tokenid": "827"
+                    "text": "天河区的签约面积在豪宅交投增多的带动下上升较快", 
+                    "token": "天 河 区 的 签 约 面 积 在 豪 宅 交 投 增 多 的 带 动 下 上 升 较 快", 
+                    "tokenid": "816 2036 423 2554 2814 2870 4038 2734 719 3533 959 83 1430 791 812 2554 1135 388 10 9 429 3666 1259"
                 }
             ], 
-            "utt2spk": "20040503_222707_A000687_B000688-A"
-	}
+            "utt2spk": "S0724"
+        }
     }
 }

@@ -13,3 +13,4 @@ egs/*/exp
 .nfs*
 .vscode
 __pycache__
+nohup.out

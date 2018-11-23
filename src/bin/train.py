@@ -22,11 +22,16 @@ parser.add_argument('--valid-json', type=str, default=None,
                     help='Filename of validation label data (json)')
 parser.add_argument('--dict', type=str, required=True,
                     help='Dictionary which should include <unk> <sos> <eos>')
+# Low Frame Rate (stacking and skipping frames)
+parser.add_argument('--LFR_m', default=4, type=int,
+                    help='Low Frame Rate: number of frames to stack')
+parser.add_argument('--LFR_n', default=3, type=int,
+                    help='Low Frame Rate: number of frames to skip')
 # Network architecture
 # encoder
 # TODO: automatically infer input dim
 parser.add_argument('--d_input', default=80, type=int,
-                    help='Dim of encoder input')
+                    help='Dim of encoder input (before LFR)')
 parser.add_argument('--n_layers_enc', default=6, type=int,
                     help='Number of encoder stacks')
 parser.add_argument('--n_head', default=8, type=int,
@@ -92,15 +97,17 @@ def main(args):
     cv_dataset = AudioDataset(args.valid_json, args.batch_size,
                               args.maxlen_in, args.maxlen_out)
     tr_loader = AudioDataLoader(tr_dataset, batch_size=1,
-                                num_workers=args.num_workers)
+                                num_workers=args.num_workers,
+                                LFR_m=args.LFR_m, LFR_n=args.LFR_n)
     cv_loader = AudioDataLoader(cv_dataset, batch_size=1,
-                                num_workers=args.num_workers)
+                                num_workers=args.num_workers,
+                                LFR_m=args.LFR_m, LFR_n=args.LFR_n)
     # load dictionary and generate char_list, sos_id, eos_id
     char_list, sos_id, eos_id = process_dict(args.dict)
     vocab_size = len(char_list)
     data = {'tr_loader': tr_loader, 'cv_loader': cv_loader}
     # model
-    encoder = Encoder(args.d_input, args.n_layers_enc, args.n_head,
+    encoder = Encoder(args.d_input * args.LFR_m, args.n_layers_enc, args.n_head,
                       args.d_k, args.d_v, args.d_model, args.d_inner,
                       dropout=args.dropout, pe_maxlen=args.pe_maxlen)
                       
