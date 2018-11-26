@@ -88,7 +88,7 @@ class Decoder(nn.Module):
         dec_slf_attn_list, dec_enc_attn_list = [], []
 
         # -- Forward
-        dec_output = self.dropout(self.tgt_word_emb(ys_in_pad) +
+        dec_output = self.dropout(self.tgt_word_emb(ys_in_pad) * self.x_logit_scale +
                                   self.positional_encoding(ys_in_pad))
 
         for dec_layer in self.layer_stack:
@@ -103,7 +103,7 @@ class Decoder(nn.Module):
                 dec_enc_attn_list += [dec_enc_attn]
 
         # before softmax
-        seq_logit = self.tgt_word_prj(dec_output) * self.x_logit_scale
+        seq_logit = self.tgt_word_prj(dec_output)
 
         # return
         pred, gold = seq_logit, ys_out_pad

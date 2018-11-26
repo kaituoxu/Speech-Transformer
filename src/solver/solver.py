@@ -19,6 +19,7 @@ class Solver(object):
 
         # Training config
         self.epochs = args.epochs
+        self.label_smoothing = args.label_smoothing
         # save and load model
         self.save_folder = args.save_folder
         self.checkpoint = args.checkpoint
@@ -146,7 +147,8 @@ class Solver(object):
             input_lengths = input_lengths.cuda()
             padded_target = padded_target.cuda()
             pred, gold = self.model(padded_input, input_lengths, padded_target)
-            loss, n_correct = cal_performance(pred, gold, smoothing=False)
+            loss, n_correct = cal_performance(pred, gold,
+                                              smoothing=self.label_smoothing)
             if not cross_valid:
                 self.optimizer.zero_grad()
                 loss.backward()

@@ -13,6 +13,10 @@ class Transformer(nn.Module):
         self.encoder = encoder
         self.decoder = decoder
 
+        for p in self.parameters():
+            if p.dim() > 1:
+                nn.init.xavier_uniform_(p)
+
     def forward(self, padded_input, input_lengths, padded_target):
         """
         Args:

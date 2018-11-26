@@ -55,11 +55,16 @@ parser.add_argument('--n_layers_dec', default=6, type=int,
                     help='Number of decoder stacks')
 parser.add_argument('--tgt_emb_prj_weight_sharing', default=1, type=int,
                     help='share decoder embedding with decoder projection')
+# Loss
+parser.add_argument('--label_smoothing', default=0.1, type=float,
+                    help='label smoothing')
 
 # Training config
 parser.add_argument('--epochs', default=30, type=int,
                     help='Number of maximum epochs')
 # minibatch
+parser.add_argument('--shuffle', default=0, type=int,
+                    help='reshuffle the data at every epoch')
 parser.add_argument('--batch-size', '-b', default=32, type=int,
                     help='Batch size')
 parser.add_argument('--maxlen-in', default=800, type=int, metavar='ML',
@@ -98,6 +103,7 @@ def main(args):
                               args.maxlen_in, args.maxlen_out)
     tr_loader = AudioDataLoader(tr_dataset, batch_size=1,
                                 num_workers=args.num_workers,
+                                shuffle=args.shuffle,
                                 LFR_m=args.LFR_m, LFR_n=args.LFR_n)
     cv_loader = AudioDataLoader(cv_dataset, batch_size=1,
                                 num_workers=args.num_workers,
