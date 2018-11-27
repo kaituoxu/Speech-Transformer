@@ -2,7 +2,7 @@ import torch.nn as nn
 
 from attention import MultiHeadAttention
 from module import PositionalEncoding, PositionwiseFeedForward
-from utils import get_non_pad_mask
+from utils import get_non_pad_mask, get_attn_pad_mask
 
 
 class Encoder(nn.Module):
@@ -44,13 +44,10 @@ class Encoder(nn.Module):
         """
         enc_slf_attn_list = []
 
-        # -- Prepare masks
-        # padding position is set to 0
-        non_pad_mask = get_non_pad_mask(padded_input, input_lengths) # NxTx1
-        # padding position is set to 1 (lt(1) like not operation)
+        # Prepare masks
+        non_pad_mask = get_non_pad_mask(padded_input, input_lengths=input_lengths)
         length = padded_input.size(1)
-        slf_attn_mask = non_pad_mask.clone().squeeze(-1).lt(1) # NxT
-        slf_attn_mask = slf_attn_mask.unsqueeze(1).expand(-1, length, -1)
+        slf_attn_mask = get_attn_pad_mask(padded_input, input_lengths, length)
 
         # Forward
         enc_output = self.dropout(

@@ -4,7 +4,8 @@ import torch.nn.functional as F
 
 from attention import MultiHeadAttention
 from module import PositionalEncoding, PositionwiseFeedForward
-from utils import IGNORE_ID, pad_list, get_subsequent_mask, get_attn_key_pad_mask, get_non_pad_mask
+from utils import (IGNORE_ID, get_attn_key_pad_mask, get_attn_pad_mask,
+                   get_non_pad_mask, get_subsequent_mask, pad_list)
 
 
 class Decoder(nn.Module):
@@ -51,18 +52,10 @@ class Decoder(nn.Module):
         else:
             self.x_logit_scale = 1.
 
-    def forward(self, padded_input, encoder_padded_outputs,
-                encoder_input_lengths, return_attns=False):
+    def preprocess(self, padded_input):
+        """Generate decoder input and output label from padded_input
+        Add <sos> to decoder input, and add <eos> to decoder output label
         """
-        Args:
-            padded_input: N x To
-            encoder_padded_outputs: N x Ti x H
-
-        Returns:
-        """
-        # START -- Get Input and Output
-        # from espnet/Decoder.forward()
-        # TODO: need to make more smart way
         ys = [y[y != IGNORE_ID] for y in padded_input]  # parse padded ys
         # prepare input and output word sequences with sos/eos IDs
         eos = ys[0].new([self.eos_id])
@@ -73,34 +66,38 @@ class Decoder(nn.Module):
         # pys: utt x olen
         ys_in_pad = pad_list(ys_in, self.eos_id)
         ys_out_pad = pad_list(ys_out, IGNORE_ID)
-        # print("ys_in_pad", ys_in_pad.size())
         assert ys_in_pad.size() == ys_out_pad.size()
-        batch_size = ys_in_pad.size(0)
-        output_length = ys_in_pad.size(1)
-        # max_length = ys_in_pad.size(1) - 1  # TODO: should minus 1(sos)?
-        # END -- Get Input and Output
+        return ys_in_pad, ys_out_pad
 
-        # -- Prepare masks
-        # TODO: encapsulate mask into functions
-        # padding position is set to 0, unsqueeze(-1) for broadcast
-        assert ys_in_pad.dim() == 2
-        non_pad_mask = ys_in_pad.ne(self.eos_id).type(torch.float).unsqueeze(-1)
-        # padding position is set to 1
-        # mask position will be filled in -np.inf in ScaledDotProductAttention
+    def forward(self, padded_input, encoder_padded_outputs,
+                encoder_input_lengths, return_attns=False):
+        """
+        Args:
+            padded_input: N x To
+            encoder_padded_outputs: N x Ti x H
+
+        Returns:
+        """
+        dec_slf_attn_list, dec_enc_attn_list = [], []
+
+        # Get Deocder Input and Output
+        ys_in_pad, ys_out_pad = self.preprocess(padded_input)
+
+        # Prepare masks
+        non_pad_mask = get_non_pad_mask(ys_in_pad, pad_idx=self.eos_id)
+
         slf_attn_mask_subseq = get_subsequent_mask(ys_in_pad)
         slf_attn_mask_keypad = get_attn_key_pad_mask(seq_k=ys_in_pad,
                                                      seq_q=ys_in_pad,
                                                      pad_idx=self.eos_id)
         slf_attn_mask = (slf_attn_mask_keypad + slf_attn_mask_subseq).gt(0)
-        # padding position is set to 1
-        dec_enc_attn_mask = get_non_pad_mask(encoder_padded_outputs, # NxTixD
-                                             encoder_input_lengths) # NxTix1, padding position is set to 0
-        dec_enc_attn_mask = dec_enc_attn_mask.clone().squeeze(-1).lt(1) # padding position is set to 1
-        dec_enc_attn_mask = dec_enc_attn_mask.unsqueeze(1).expand(-1, output_length, -1)
 
-        dec_slf_attn_list, dec_enc_attn_list = [], []
+        output_length = ys_in_pad.size(1)
+        dec_enc_attn_mask = get_attn_pad_mask(encoder_padded_outputs,
+                                              encoder_input_lengths,
+                                              output_length)
 
-        # -- Forward
+        # Forward
         dec_output = self.dropout(self.tgt_word_emb(ys_in_pad) * self.x_logit_scale +
                                   self.positional_encoding(ys_in_pad))
 
@@ -118,7 +115,7 @@ class Decoder(nn.Module):
         # before softmax
         seq_logit = self.tgt_word_prj(dec_output)
 
-        # return
+        # Return
         pred, gold = seq_logit, ys_out_pad
 
         if return_attns:
