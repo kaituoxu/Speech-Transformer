@@ -5,8 +5,9 @@ import json
 import torch
 
 import kaldi_io
-from seq2seq import Seq2Seq
+from transformer import Transformer
 from utils import add_results_to_json, process_dict
+from data import build_LFR_features
 
 parser = argparse.ArgumentParser(
     "End-to-End Automatic Speech Recognition Decoding.")
@@ -32,7 +33,7 @@ parser.add_argument('--decode-max-len', default=0, type=int,
 
 
 def recognize(args):
-    model = Seq2Seq.load_model(args.model_path)
+    model, LFR_m, LFR_n = Transformer.load_model(args.model_path)
     print(model)
     model.eval()
     model.cuda()
@@ -50,6 +51,7 @@ def recognize(args):
             print('(%d/%d) decoding %s' %
                   (idx, len(js.keys()), name), flush=True)
             input = kaldi_io.read_mat(js[name]['input'][0]['feat'])  # TxD
+            input = build_LFR_features(input, LFR_m, LFR_n)
             input = torch.from_numpy(input).float()
             input_length = torch.tensor([input.size(0)], dtype=torch.int)
             input = input.cuda()

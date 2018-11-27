@@ -122,7 +122,8 @@ def load_inputs_and_targets(batch, LFR_m=1, LFR_n=1):
     ys = [b[1]['output'][0]['tokenid'].split() for b in batch]
 
     if LFR_m != 1 or LFR_n != 1:
-        xs = build_LFR_features(xs, LFR_m, LFR_n)
+        # xs = build_LFR_features(xs, LFR_m, LFR_n)
+        xs = [build_LFR_features(x, LFR_m, LFR_n) for x in xs]
 
     # get index of non-zero length samples
     nonzero_idx = filter(lambda i: len(ys[i]) > 0, range(len(xs)))
@@ -139,7 +140,7 @@ def load_inputs_and_targets(batch, LFR_m=1, LFR_n=1):
     return xs, ys
 
 
-def build_LFR_features(inputs_batch, m, n):
+def build_LFR_features(inputs, m, n):
     """
     Actually, this implements stacking frames and skipping frames.
     if m = 1 and n = 1, just return the origin features.
@@ -148,23 +149,24 @@ def build_LFR_features(inputs_batch, m, n):
     if m > 1 and n > 1, it works like LFR.
 
     Args:
-        inputs_batch: list, [inputs1, inputs2, ...], inputsX is T x D np.ndarray
+        inputs_batch: inputs is T x D np.ndarray
         m: number of frames to stack
         n: number of frames to skip
     """
-    LFR_inputs_batch = []
-    for inputs in inputs_batch:
-        LFR_inputs = []
-        T = inputs.shape[0]
-        T_lfr = int(np.ceil(T / n))
-        for i in range(T_lfr):
-            if m <= T - i * n:
-                LFR_inputs.append(np.hstack(inputs[i*n:i*n+m]))
-            else: # process last LFR frame
-                num_padding = m - (T - i * n)
-                frame = np.hstack(inputs[i*n:])
-                for _ in range(num_padding):
-                    frame = np.hstack((frame, inputs[-1]))
-                LFR_inputs.append(frame)
-        LFR_inputs_batch.append(np.vstack(LFR_inputs))
-    return LFR_inputs_batch
+    # LFR_inputs_batch = []
+    # for inputs in inputs_batch:
+    LFR_inputs = []
+    T = inputs.shape[0]
+    T_lfr = int(np.ceil(T / n))
+    for i in range(T_lfr):
+        if m <= T - i * n:
+            LFR_inputs.append(np.hstack(inputs[i*n:i*n+m]))
+        else: # process last LFR frame
+            num_padding = m - (T - i * n)
+            frame = np.hstack(inputs[i*n:])
+            for _ in range(num_padding):
+                frame = np.hstack((frame, inputs[-1]))
+            LFR_inputs.append(frame)
+    return np.vstack(LFR_inputs)
+    #     LFR_inputs_batch.append(np.vstack(LFR_inputs))
+    # return LFR_inputs_batch

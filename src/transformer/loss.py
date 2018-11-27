@@ -12,7 +12,7 @@ def cal_performance(pred, gold, smoothing=0.0):
     """
 
     pred = pred.view(-1, pred.size(2))
-    gold = gold.continuous().view(-1)
+    gold = gold.contiguous().view(-1)
 
     loss = cal_loss(pred, gold, smoothing)
 

@@ -43,7 +43,7 @@ visdom=0
 visdom_id="Transformer Training"
 
 # Decode config
-beam_size=30
+beam_size=5
 nbest=1
 decode_max_len=100
 
@@ -165,8 +165,6 @@ if [ ${stage} -le 3 ]; then
         --visdom $visdom \
         --visdom-id "$visdom_id"
 fi
-
-exit 0
 
 if [ ${stage} -le 4 ]; then
     echo "stage 5: Decoding"

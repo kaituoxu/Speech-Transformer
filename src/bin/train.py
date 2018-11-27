@@ -116,7 +116,6 @@ def main(args):
     encoder = Encoder(args.d_input * args.LFR_m, args.n_layers_enc, args.n_head,
                       args.d_k, args.d_v, args.d_model, args.d_inner,
                       dropout=args.dropout, pe_maxlen=args.pe_maxlen)
-                      
     decoder = Decoder(sos_id, eos_id, vocab_size,
                       args.d_word_vec, args.n_layers_dec, args.n_head,
                       args.d_k, args.d_v, args.d_model, args.d_inner,

@@ -17,6 +17,10 @@ class Solver(object):
         self.model = model
         self.optimizer = optimizer
 
+        # Low frame rate feature
+        self.LFR_m = args.LFR_m
+        self.LFR_n = args.LFR_n
+
         # Training config
         self.epochs = args.epochs
         self.label_smoothing = args.label_smoothing
@@ -80,6 +84,7 @@ class Solver(object):
                 file_path = os.path.join(
                     self.save_folder, 'epoch%d.pth.tar' % (epoch + 1))
                 torch.save(self.model.serialize(self.model, self.optimizer, epoch + 1,
+                                                self.LFR_m, self.LFR_n,
                                                 tr_loss=self.tr_loss,
                                                 cv_loss=self.cv_loss),
                            file_path)
@@ -100,6 +105,7 @@ class Solver(object):
                 self.best_val_loss = val_loss
                 file_path = os.path.join(self.save_folder, self.model_path)
                 torch.save(self.model.serialize(self.model, self.optimizer, epoch + 1,
+                                                self.LFR_m, self.LFR_n,
                                                 tr_loss=self.tr_loss,
                                                 cv_loss=self.cv_loss),
                            file_path)
