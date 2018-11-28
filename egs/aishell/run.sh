@@ -1,6 +1,6 @@
 #!/bin/bash
 
-stage=3
+stage=-1
 
 ngpu=1         # number of gpus ("0" uses cpu, otherwise use gpu)
 nj=40
