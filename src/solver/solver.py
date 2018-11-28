@@ -35,6 +35,7 @@ class Solver(object):
         self.tr_loss = torch.Tensor(self.epochs)
         self.cv_loss = torch.Tensor(self.epochs)
         self.visdom = args.visdom
+        self.visdom_epoch = args.visdom_epoch
         self.visdom_id = args.visdom_id
         if self.visdom:
             from visdom import Visdom
@@ -44,6 +45,7 @@ class Solver(object):
                                  legend=['train loss', 'cv loss'])
             self.vis_window = None
             self.vis_epochs = torch.arange(1, self.epochs + 1)
+            self.optimizer.set_visdom(self.vis)
 
         self._reset()
 
@@ -140,7 +142,7 @@ class Solver(object):
         data_loader = self.tr_loader if not cross_valid else self.cv_loader
 
         # visualizing loss using visdom
-        if self.visdom and not cross_valid:
+        if self.visdom_epoch and not cross_valid:
             vis_opts_epoch = dict(title=self.visdom_id + " epoch " + str(epoch),
                                   ylabel='Loss', xlabel='Epoch')
             vis_window_epoch = None
@@ -172,7 +174,7 @@ class Solver(object):
                       flush=True)
 
             # visualizing loss using visdom
-            if self.visdom and not cross_valid:
+            if self.visdom_epoch and not cross_valid:
                 vis_iters_loss[i] = loss.item()
                 if i % self.print_freq == 0:
                     x_axis = vis_iters[:i+1]

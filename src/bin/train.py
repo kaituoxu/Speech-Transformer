@@ -74,6 +74,8 @@ parser.add_argument('--maxlen-out', default=150, type=int, metavar='ML',
 parser.add_argument('--num-workers', default=4, type=int,
                     help='Number of workers to generate minibatch')
 # optimizer
+parser.add_argument('--k', default=1.0, type=float,
+                    help='tunable scalar multiply to learning rate')
 parser.add_argument('--warmup_steps', default=4000, type=int,
                     help='warmup steps')
 # save and load model
@@ -90,6 +92,8 @@ parser.add_argument('--print-freq', default=10, type=int,
                     help='Frequency of printing training infomation')
 parser.add_argument('--visdom', dest='visdom', type=int, default=0,
                     help='Turn on visdom graphing')
+parser.add_argument('--visdom_epoch', dest='visdom_epoch', type=int, default=0,
+                    help='Turn on visdom graphing each epoch')
 parser.add_argument('--visdom-id', default='Transformer training',
                     help='Identifier for visdom run')
 
@@ -128,6 +132,7 @@ def main(args):
     # optimizer
     optimizier = TransformerOptimizer(
         torch.optim.Adam(model.parameters(), betas=(0.9, 0.98), eps=1e-09),
+        args.k,
         args.d_model,
         args.warmup_steps)
 
