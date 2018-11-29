@@ -25,7 +25,7 @@ class AudioDataset(data.Dataset):
     """
 
     def __init__(self, data_json_path, batch_size, max_length_in, max_length_out,
-                 num_batches=0):
+                 num_batches=0, batch_frames=0):
         # From: espnet/src/asr/asr_utils.py: make_batchset()
         """
         Args:
@@ -40,20 +40,46 @@ class AudioDataset(data.Dataset):
             data[1]['input'][0]['shape'][0]), reverse=True)
         # change batchsize depending on the input and output length
         minibatch = []
-        start = 0
-        while True:
-            ilen = int(sorted_data[start][1]['input'][0]['shape'][0])
-            olen = int(sorted_data[start][1]['output'][0]['shape'][0])
-            factor = max(int(ilen / max_length_in), int(olen / max_length_out))
-            # if ilen = 1000 and max_length_in = 800
-            # then b = batchsize / 2
-            # and max(1, .) avoids batchsize = 0
-            b = max(1, int(batch_size / (1 + factor)))
-            end = min(len(sorted_data), start + b)
-            minibatch.append(sorted_data[start:end])
-            if end == len(sorted_data):
-                break
-            start = end
+        # Method 1: Generate minibatch based on batch_size
+        # i.e. each batch contains #batch_size utterances
+        if batch_frames == 0:
+            start = 0
+            while True:
+                ilen = int(sorted_data[start][1]['input'][0]['shape'][0])
+                olen = int(sorted_data[start][1]['output'][0]['shape'][0])
+                factor = max(int(ilen / max_length_in), int(olen / max_length_out))
+                # if ilen = 1000 and max_length_in = 800
+                # then b = batchsize / 2
+                # and max(1, .) avoids batchsize = 0
+                b = max(1, int(batch_size / (1 + factor)))
+                end = min(len(sorted_data), start + b)
+                minibatch.append(sorted_data[start:end])
+                # DEBUG
+                # total= 0
+                # for i in range(start, end):
+                #     total += int(sorted_data[i][1]['input'][0]['shape'][0])
+                # print(total, end-start)
+                if end == len(sorted_data):
+                    break
+                start = end
+        # Method 2: Generate minibatch based on batch_frames
+        # i.e. each batch contains approximately #batch_frames frames
+        else:  # batch_frames > 0
+            print("NOTE: Generate minibatch based on batch_frames.")
+            print("i.e. each batch contains approximately #batch_frames frames")
+            start = 0
+            while True:
+                total_frames = 0
+                end = start
+                while total_frames < batch_frames and end < len(sorted_data):
+                    ilen = int(sorted_data[end][1]['input'][0]['shape'][0])
+                    total_frames += ilen
+                    end += 1
+                # print(total_frames, end-start)
+                minibatch.append(sorted_data[start:end])
+                if end == len(sorted_data):
+                    break
+                start = end
         if num_batches > 0:
             minibatch = minibatch[:num_batches]
         self.minibatch = minibatch

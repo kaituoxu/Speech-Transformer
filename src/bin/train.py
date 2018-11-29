@@ -65,8 +65,10 @@ parser.add_argument('--epochs', default=30, type=int,
 # minibatch
 parser.add_argument('--shuffle', default=0, type=int,
                     help='reshuffle the data at every epoch')
-parser.add_argument('--batch-size', '-b', default=32, type=int,
+parser.add_argument('--batch-size', default=32, type=int,
                     help='Batch size')
+parser.add_argument('--batch_frames', default=0, type=int,
+                    help='Batch frames. If this is not 0, batch size will make no sense')
 parser.add_argument('--maxlen-in', default=800, type=int, metavar='ML',
                     help='Batch size is reduced if the input sequence length > ML')
 parser.add_argument('--maxlen-out', default=150, type=int, metavar='ML',
@@ -102,9 +104,11 @@ def main(args):
     # Construct Solver
     # data
     tr_dataset = AudioDataset(args.train_json, args.batch_size,
-                              args.maxlen_in, args.maxlen_out)
+                              args.maxlen_in, args.maxlen_out,
+                              batch_frames=args.batch_frames)
     cv_dataset = AudioDataset(args.valid_json, args.batch_size,
-                              args.maxlen_in, args.maxlen_out)
+                              args.maxlen_in, args.maxlen_out,
+                              batch_frames=args.batch_frames)
     tr_loader = AudioDataLoader(tr_dataset, batch_size=1,
                                 num_workers=args.num_workers,
                                 shuffle=args.shuffle,

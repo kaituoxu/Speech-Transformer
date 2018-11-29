@@ -1,6 +1,6 @@
 #!/bin/bash
 
-stage=-1
+stage=3
 
 ngpu=1         # number of gpus ("0" uses cpu, otherwise use gpu)
 nj=40
@@ -34,6 +34,7 @@ label_smoothing=0.1
 epochs=20
 shuffle=0
 batch_size=16
+batch_frames=0
 maxlen_in=800
 maxlen_out=150
 # optimizer
@@ -126,7 +127,7 @@ if [ $stage -le 2 ]; then
 fi
 
 if [ -z ${tag} ]; then
-    expdir=exp/train_m${LFR_m}_n${LFR_n}_in${d_input}_elayer${n_layers_enc}_head${n_head}_k${d_k}_v${d_v}_model${d_model}_inner${d_inner}_drop${dropout}_pe${pe_maxlen}_emb${d_word_vec}_dlayer${n_layers_dec}_share${tgt_emb_prj_weight_sharing}_ls${label_smoothing}_epoch${epochs}_shuffle${shuffle}_bs${batch_size}_mli${maxlen_in}_mlo${maxlen_out}_k${k}_warm${warmup_steps}
+    expdir=exp/train_m${LFR_m}_n${LFR_n}_in${d_input}_elayer${n_layers_enc}_head${n_head}_k${d_k}_v${d_v}_model${d_model}_inner${d_inner}_drop${dropout}_pe${pe_maxlen}_emb${d_word_vec}_dlayer${n_layers_dec}_share${tgt_emb_prj_weight_sharing}_ls${label_smoothing}_epoch${epochs}_shuffle${shuffle}_bs${batch_size}_bf${batch_frames}_mli${maxlen_in}_mlo${maxlen_out}_k${k}_warm${warmup_steps}
     if ${do_delta}; then
         expdir=${expdir}_delta
     fi
@@ -160,6 +161,7 @@ if [ ${stage} -le 3 ]; then
         --epochs $epochs \
         --shuffle $shuffle \
         --batch-size $batch_size \
+        --batch_frames $batch_frames \
         --maxlen-in $maxlen_in \
         --maxlen-out $maxlen_out \
         --k $k \

@@ -11,7 +11,18 @@ if __name__ == "__main__":
     max_length_out = 1000
     num_batches = 10
     num_workers = 2
+    batch_frames = 2000
 
+    # test batch_frames
+    train_dataset = AudioDataset(
+        train_json, batch_size, max_length_in, max_length_out, num_batches,
+        batch_frames=batch_frames)
+    for i, minibatch in enumerate(train_dataset):
+        print(i)
+        print(minibatch)
+    exit(0)
+
+    # test
     train_dataset = AudioDataset(
         train_json, batch_size, max_length_in, max_length_out, num_batches)
     # NOTE: must set batch_size=1 here.
