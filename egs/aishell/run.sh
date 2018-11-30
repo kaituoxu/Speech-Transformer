@@ -1,6 +1,6 @@
 #!/bin/bash
 
-stage=3
+stage=-1
 
 ngpu=1         # number of gpus ("0" uses cpu, otherwise use gpu)
 nj=40
@@ -28,17 +28,18 @@ d_word_vec=512
 n_layers_dec=6
 tgt_emb_prj_weight_sharing=1
 # Loss
-label_smoothing=0.1
+label_smoothing=0.0
 
 # Training config
-epochs=20
-shuffle=0
+epochs=50
+# minibatch
+shuffle=1
 batch_size=16
-batch_frames=0
+batch_frames=15000
 maxlen_in=800
 maxlen_out=150
 # optimizer
-k=1
+k=0.1
 warmup_steps=4000
 # save & logging
 checkpoint=1
