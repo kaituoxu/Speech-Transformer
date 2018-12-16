@@ -28,10 +28,10 @@ d_word_vec=512
 n_layers_dec=6
 tgt_emb_prj_weight_sharing=1
 # Loss
-label_smoothing=0.0
+label_smoothing=0.1
 
 # Training config
-epochs=50
+epochs=150
 # minibatch
 shuffle=1
 batch_size=16
@@ -39,12 +39,13 @@ batch_frames=15000
 maxlen_in=800
 maxlen_out=150
 # optimizer
-k=0.1
+k=0.2
 warmup_steps=4000
 # save & logging
-checkpoint=1
+checkpoint=0
 print_freq=10
 visdom=0
+visdom_lr=0
 visdom_epoch=0
 visdom_id="Transformer Training"
 
@@ -138,7 +139,7 @@ fi
 mkdir -p ${expdir}
 
 if [ ${stage} -le 3 ]; then
-    echo "stage 4: Network Training"
+    echo "stage 3: Network Training"
     ${cuda_cmd} --gpu ${ngpu} ${expdir}/train.log \
         train.py \
         --train-json ${feat_train_dir}/data.json \
@@ -171,12 +172,13 @@ if [ ${stage} -le 3 ]; then
         --checkpoint $checkpoint \
         --print-freq ${print_freq} \
         --visdom $visdom \
+        --visdom_lr $visdom_lr \
         --visdom_epoch $visdom_epoch \
         --visdom-id "$visdom_id"
 fi
 
 if [ ${stage} -le 4 ]; then
-    echo "stage 5: Decoding"
+    echo "stage 4: Decoding"
     decode_dir=${expdir}/decode_test_beam${beam_size}_nbest${nbest}_ml${decode_max_len}
     mkdir -p ${decode_dir}
     ${cuda_cmd} --gpu ${ngpu} ${decode_dir}/decode.log \

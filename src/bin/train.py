@@ -94,6 +94,8 @@ parser.add_argument('--print-freq', default=10, type=int,
                     help='Frequency of printing training infomation')
 parser.add_argument('--visdom', dest='visdom', type=int, default=0,
                     help='Turn on visdom graphing')
+parser.add_argument('--visdom_lr', dest='visdom_lr', type=int, default=0,
+                    help='Turn on visdom graphing learning rate')
 parser.add_argument('--visdom_epoch', dest='visdom_epoch', type=int, default=0,
                     help='Turn on visdom graphing each epoch')
 parser.add_argument('--visdom-id', default='Transformer training',

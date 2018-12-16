@@ -11,7 +11,7 @@ class TransformerOptimizer(object):
         self.init_lr = d_model ** (-0.5)
         self.warmup_steps = warmup_steps
         self.step_num = 0
-        self.visdom = None
+        self.visdom_lr = None
 
     def zero_grad(self):
         self.optimizer.zero_grad()
@@ -37,8 +37,9 @@ class TransformerOptimizer(object):
     def set_k(self, k):
         self.k = k
 
-    def set_visdom(self, visdom):
-        self.visdom = visdom
+    def set_visdom(self, visdom_lr, vis):
+        self.visdom_lr = visdom_lr  # Turn on/off visdom of learning rate
+        self.vis = vis  # visdom enviroment
         self.vis_opts = dict(title='Learning Rate',
                              ylabel='Leanring Rate', xlabel='step')
         self.vis_window = None
@@ -46,14 +47,14 @@ class TransformerOptimizer(object):
         self.y_axis = torch.FloatTensor()
 
     def _visdom(self):
-        if self.visdom is not None:
+        if self.visdom_lr is not None:
             self.x_axis = torch.cat(
                 [self.x_axis, torch.LongTensor([self.step_num])])
             self.y_axis = torch.cat(
                 [self.y_axis, torch.FloatTensor([self.optimizer.param_groups[0]['lr']])])
             if self.vis_window is None:
-                self.vis_window = self.visdom.line(X=self.x_axis, Y=self.y_axis,
-                                                   opts=self.vis_opts)
+                self.vis_window = self.vis.line(X=self.x_axis, Y=self.y_axis,
+                                                opts=self.vis_opts)
             else:
-                self.visdom.line(X=self.x_axis, Y=self.y_axis, win=self.vis_window,
-                                 update='replace')
+                self.vis.line(X=self.x_axis, Y=self.y_axis, win=self.vis_window,
+                              update='replace')

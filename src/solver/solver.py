@@ -35,6 +35,7 @@ class Solver(object):
         self.tr_loss = torch.Tensor(self.epochs)
         self.cv_loss = torch.Tensor(self.epochs)
         self.visdom = args.visdom
+        self.visdom_lr = args.visdom_lr
         self.visdom_epoch = args.visdom_epoch
         self.visdom_id = args.visdom_id
         if self.visdom:
@@ -45,7 +46,7 @@ class Solver(object):
                                  legend=['train loss', 'cv loss'])
             self.vis_window = None
             self.vis_epochs = torch.arange(1, self.epochs + 1)
-            self.optimizer.set_visdom(self.vis)
+            self.optimizer.set_visdom(self.visdom_lr, self.vis)
 
         self._reset()
 
