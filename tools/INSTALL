@@ -1,5 +1,0 @@
-Install
-  make KALDI=/path/to/kaldi
-
-Clean
-  make clean
