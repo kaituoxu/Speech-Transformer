@@ -58,8 +58,8 @@ class Solver(object):
             self.model.load_state_dict(package['state_dict'])
             self.optimizer.load_state_dict(package['optim_dict'])
             self.start_epoch = int(package.get('epoch', 1))
-            self.tr_loss[:self.start_epoch] = package['tr_loss']
-            self.cv_loss[:self.start_epoch] = package['cv_loss']
+            self.tr_loss[:self.start_epoch] = package['tr_loss'][:self.start_epoch]
+            self.cv_loss[:self.start_epoch] = package['cv_loss'][:self.start_epoch]
         else:
             self.start_epoch = 0
         # Create save folder

@@ -43,6 +43,7 @@ k=0.2
 warmup_steps=4000
 # save & logging
 checkpoint=0
+continue_from=""
 print_freq=10
 visdom=0
 visdom_lr=0
@@ -170,6 +171,7 @@ if [ ${stage} -le 3 ]; then
         --warmup_steps $warmup_steps \
         --save-folder ${expdir} \
         --checkpoint $checkpoint \
+        --continue_from "$continue_from" \
         --print-freq ${print_freq} \
         --visdom $visdom \
         --visdom_lr $visdom_lr \
