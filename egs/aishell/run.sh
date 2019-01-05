@@ -1,6 +1,9 @@
 #!/bin/bash
 
-stage=-1
+# -- IMPORTANT
+data=/home/work_nfs/common/data # Modify to your aishell data path
+stage=-1  # Modify to control start from witch stage
+# --
 
 ngpu=1         # number of gpus ("0" uses cpu, otherwise use gpu)
 nj=40
@@ -57,8 +60,6 @@ decode_max_len=100
 
 # exp tag
 tag="" # tag for managing experiments.
-
-data=/home/work_nfs/common/data
 
 . utils/parse_options.sh || exit 1;
 . ./cmd.sh
