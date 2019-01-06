@@ -1,5 +1,5 @@
-# End-to-End Automatic Speech Recognition with Transformer
-This is a PyTorch implementation of End-to-End ASR with [Transformer](https://arxiv.org/abs/1706.03762) model.
+# Speech Transformer: End-to-End ASR with Transformer
+A PyTorch implementation of Speech Transformer [1][2][3], an end-to-end automatic speech recognition with [Transformer](https://arxiv.org/abs/1706.03762) [4] network, which directly converts audio features to character sequence using only one nueral network.
 
 ## Install
 - Python3 (Recommend Anaconda)
@@ -48,8 +48,11 @@ If you want to visualize your loss, you can use [visdom](https://github.com/face
 | Listen, Attend and Spell | 13.2 | See my repo ListenAttendSpell's egs/aishell/run.sh |
 | SpeechTransformer | 12.8 | See egs/aishell/run.sh |
 
-## Related papers
-- Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Lukasz Kaiser, and Illia Polosukhin, “Attention is all you need,” in Advances in Neural Information Processing Systems, 2017, pp. 5998–6008.
-- Linhao Dong, Shuang Xu,and Bo Xu,“Speech-transformer:A no-recurrence sequence-to-sequence model for speech recognition,” in International Conference on Acoustics, Speech and Signal Processing (ICASSP). IEEE, 2018, pp. 5884–5888.
-- Shiyu Zhou, Linhao Dong, Shuang Xu, and Bo Xu, “Syllable-based sequence-to-sequence speech recognition with the transformer in mandarin chinese,” in Proc. Interspeech 2018, 2018, pp. 791–795.
-- Shiyu Zhou, Linhao Dong, Shuang Xu, and Bo Xu, “A comparison of modeling units in sequence-to-sequence speech recognition with the transformer on mandarin chinese,” arXiv preprint arXiv:1805.06239, 2018.
+## Reference
+[1] Linhao Dong, Shuang Xu,and Bo Xu. “Speech-transformer:A no-recurrence sequence-to-sequence model for speech recognition” in ICASSP 2018
+
+[2] Shiyu Zhou, Linhao Dong, et al. “Syllable-based sequence-to-sequence speech recognition with the transformer in mandarin chinese” in Interspeech 2018
+
+[3] Shiyu Zhou, Linhao Dong, et al. “A comparison of modeling units in sequence-to-sequence speech recognition with the transformer on mandarin chinese” arXiv preprint arXiv:1805.06239
+
+[4] Ashish Vaswani, Noam Shazeer, et al. “Attention is all you need” in NIPS 2017
