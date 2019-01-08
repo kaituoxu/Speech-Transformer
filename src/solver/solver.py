@@ -104,6 +104,8 @@ class Solver(object):
             print('-' * 85)
 
             # Save the best model
+            self.tr_loss[epoch] = tr_avg_loss
+            self.cv_loss[epoch] = val_loss
             if val_loss < self.best_val_loss:
                 self.best_val_loss = val_loss
                 file_path = os.path.join(self.save_folder, self.model_path)
@@ -115,8 +117,6 @@ class Solver(object):
                 print("Find better validated model, saving to %s" % file_path)
 
             # visualizing loss using visdom
-            self.tr_loss[epoch] = tr_avg_loss
-            self.cv_loss[epoch] = val_loss
             if self.visdom:
                 x_axis = self.vis_epochs[0:epoch + 1]
                 y_axis = torch.stack(
