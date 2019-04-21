@@ -186,7 +186,7 @@ if [ ${stage} -le 4 ];then
     mkdir -p ${lm_dir}
     awk '{$1="";print $0}' data/train/text.org | sed  's/^[ \t]*//g' | python local/split.py > ${lm_dir}/single_word.txt
     cat ${data}/resource_aishell/lexicon.txt | grep -v 'SIL' | LC_ALL="zh_CN.UTF-8" awk '{if (length($1) <2 ) print $1}' | cat - <(echo "<s>"; echo "</s>"; echo "<SPOKEN_NOISE>" )> ${lm_dir}/wordlist
-    ngram-count -text ${lm_dir}/single_word.txt  -order 3 -limit-vocab -vocab ${lm_dir}/wordlist -unk -map-unk "<SPOKEN_NOISE>" -kndiscount -interpolate -lm ${lm_dir}/lm.arpa
+    ngram-count -text ${lm_dir}/single_word.txt  -order 3 -limit-vocab -vocab ${lm_dir}/wordlist -unk -map-unk "<unk>" -kndiscount -interpolate -lm ${lm_dir}/lm.arpa
 
 fi
 
