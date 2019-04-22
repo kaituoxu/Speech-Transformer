@@ -56,7 +56,7 @@ When happened in training, try to reduce `batch_size`. `$ bash run.sh --batch_si
 | LSTMP | 9.85| 4x(1024-512). See [kaldi-ktnet1](https://github.com/kaituoxu/kaldi-ktnet1/blob/ktnet1/egs/aishell/s5/local/nnet1/run_4lstm.sh)|
 | Listen, Attend and Spell | 13.2 | See [Listen-Attend-Spell](https://github.com/kaituoxu/Listen-Attend-Spell)'s egs/aishell/run.sh |
 | SpeechTransformer | 12.8 | See egs/aishell/run.sh |
-
+| SpeechTransformer + 3-gram | 12.1 | insert stage 4 in egs/aishell/run.sh |
 ## Reference
 - [1] Linhao Dong, Shuang Xu,and Bo Xu. “Speech-transformer:A no-recurrence sequence-to-sequence model for speech recognition” in ICASSP 2018
 - [2] Shiyu Zhou, Linhao Dong, et al. “Syllable-based sequence-to-sequence speech recognition with the transformer in mandarin chinese” in Interspeech 2018
