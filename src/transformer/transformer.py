@@ -31,7 +31,7 @@ class Transformer(nn.Module):
                                       input_lengths)
         return pred, gold
 
-    def recognize(self, input, input_length, char_list, args):
+    def recognize(self, input, input_length, char_list, lm_model, args):
         """Sequence-to-Sequence beam search, decode one utterence now.
         Args:
             input: T x D
@@ -43,6 +43,7 @@ class Transformer(nn.Module):
         encoder_outputs, *_ = self.encoder(input.unsqueeze(0), input_length)
         nbest_hyps = self.decoder.recognize_beam(encoder_outputs[0],
                                                  char_list,
+						 lm_model,
                                                  args)
         return nbest_hyps
 

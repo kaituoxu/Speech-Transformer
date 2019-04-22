@@ -1,11 +1,11 @@
 #!/bin/bash
-
+set -ex
 # -- IMPORTANT
-data=/home/work_nfs/common/data # Modify to your aishell data path
+data= # Modify to your aishell data path
 stage=-1  # Modify to control start from witch stage
 # --
 
-ngpu=1         # number of gpus ("0" uses cpu, otherwise use gpu)
+ngpu=2         # number of gpus ("0" uses cpu, otherwise use gpu)
 nj=40
 
 dumpdir=dump   # directory to dump full features
@@ -74,8 +74,7 @@ if [ $stage -le 0 ]; then
     # remove space in text
     for x in train test dev; do
         cp data/${x}/text data/${x}/text.org
-        paste -d " " <(cut -f 1 -d" " data/${x}/text.org) <(cut -f 2- -d" " data/${x}/text.org | tr -d " ") \
-            > data/${x}/text
+        paste -d ' ' <(cut -f 1 -d' ' data/${x}/text.org) <(cut -f 2- -d' ' data/${x}/text.org | tr -d ' ' )  > data/${x}/text
     done
 fi
 
@@ -172,7 +171,7 @@ if [ ${stage} -le 3 ]; then
         --warmup_steps $warmup_steps \
         --save-folder ${expdir} \
         --checkpoint $checkpoint \
-        --continue_from "$continue_from" \
+        --continue-from "$continue_from" \
         --print-freq ${print_freq} \
         --visdom $visdom \
         --visdom_lr $visdom_lr \
@@ -180,8 +179,19 @@ if [ ${stage} -le 3 ]; then
         --visdom-id "$visdom_id"
 fi
 
-if [ ${stage} -le 4 ]; then
-    echo "stage 4: Decoding"
+lm_dir=lm
+if [ ${stage} -le 4 ];then
+    echo "stage 5: Language Model Training"
+    # get the train corpus and split it to single word
+    mkdir -p ${lm_dir}
+    awk '{$1="";print $0}' data/train/text.org | sed  's/^[ \t]*//g' | python local/split.py > ${lm_dir}/single_word.txt
+    cat ${data}/resource_aishell/lexicon.txt | grep -v 'SIL' | LC_ALL="zh_CN.UTF-8" awk '{if (length($1) <2 ) print $1}' | cat - <(echo "<s>"; echo "</s>"; echo "<SPOKEN_NOISE>" )> ${lm_dir}/wordlist
+    ngram-count -text ${lm_dir}/single_word.txt  -order 3 -limit-vocab -vocab ${lm_dir}/wordlist -unk -map-unk "<unk>" -kndiscount -interpolate -lm ${lm_dir}/lm.arpa
+
+fi
+
+if [ ${stage} -le 5 ]; then
+    echo "stage 5: Decoding"
     decode_dir=${expdir}/decode_test_beam${beam_size}_nbest${nbest}_ml${decode_max_len}
     mkdir -p ${decode_dir}
     ${cuda_cmd} --gpu ${ngpu} ${decode_dir}/decode.log \
@@ -192,8 +202,9 @@ if [ ${stage} -le 4 ]; then
         --model-path ${expdir}/final.pth.tar \
         --beam-size $beam_size \
         --nbest $nbest \
-        --decode-max-len $decode_max_len
+        --decode-max-len $decode_max_len \
+	--lm-path ${lm_dir}/lm.arpa
 
     # Compute CER
-    local/score.sh --nlsyms ${nlsyms} ${decode_dir} ${dict}
+    local/score_transformer.sh --nlsyms ${nlsyms} ${decode_dir} ${dict}
 fi

@@ -3,7 +3,7 @@ import argparse
 import json
 
 import torch
-
+import kenlm
 import kaldi_io
 from transformer import Transformer
 from utils import add_results_to_json, process_dict
@@ -20,7 +20,9 @@ parser.add_argument('--result-label', type=str, required=True,
                     help='Filename of result label data (json)')
 # model
 parser.add_argument('--model-path', type=str, required=True,
-                    help='Path to model file created by training')
+                    help='Path to acoustics model file created by training')
+parser.add_argument('--lm-path', type=str, required=True,
+		    help='Path to language model')
 # decode
 parser.add_argument('--beam-size', default=1, type=int,
                     help='Beam size')
@@ -43,7 +45,8 @@ def recognize(args):
     # read json data
     with open(args.recog_json, 'rb') as f:
         js = json.load(f)['utts']
-
+    # import Language Model
+    lm_model = kenlm.Model(args.lm_path)
     # decode each utterance
     new_js = {}
     with torch.no_grad():
@@ -56,7 +59,7 @@ def recognize(args):
             input_length = torch.tensor([input.size(0)], dtype=torch.int)
             input = input.cuda()
             input_length = input_length.cuda()
-            nbest_hyps = model.recognize(input, input_length, char_list, args)
+            nbest_hyps = model.recognize(input, input_length, char_list, lm_model, args)
             new_js[name] = add_results_to_json(js[name], nbest_hyps, char_list)
 
     with open(args.result_label, 'wb') as f:

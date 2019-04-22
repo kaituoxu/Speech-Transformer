@@ -1,12 +1,11 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-
+import math
 from attention import MultiHeadAttention
 from module import PositionalEncoding, PositionwiseFeedForward
 from utils import (IGNORE_ID, get_attn_key_pad_mask, get_attn_pad_mask,
                    get_non_pad_mask, get_subsequent_mask, pad_list)
-
 
 class Decoder(nn.Module):
     ''' A decoder model with self attention mechanism. '''
@@ -123,7 +122,7 @@ class Decoder(nn.Module):
         return pred, gold
 
 
-    def recognize_beam(self, encoder_outputs, char_list, args):
+    def recognize_beam(self, encoder_outputs, char_list, lm_model, args):
         """Beam search, decode one utterence now.
         Args:
             encoder_outputs: T x H
@@ -133,6 +132,7 @@ class Decoder(nn.Module):
         Returns:
             nbest_hyps:
         """
+ 
         # search params
         beam = args.beam_size
         nbest = args.nbest
@@ -147,7 +147,7 @@ class Decoder(nn.Module):
         ys = torch.ones(1, 1).fill_(self.sos_id).type_as(encoder_outputs).long()
 
         # yseq: 1xT
-        hyp = {'score': 0.0, 'yseq': ys}
+        hyp = {'am_score': 0.0,'lm_score':0.0,'total_score':0.0,'yseq': ys}
         hyps = [hyp]
         ended_hyps = []
 
@@ -181,16 +181,22 @@ class Decoder(nn.Module):
 
                 for j in range(beam):
                     new_hyp = {}
-                    new_hyp['score'] = hyp['score'] + local_best_scores[0, j]
+                    new_hyp['am_score'] = hyp['am_score'] + local_best_scores[0, j]
                     new_hyp['yseq'] = torch.ones(1, (1+ys.size(1))).type_as(encoder_outputs).long()
                     new_hyp['yseq'][:, :ys.size(1)] = hyp['yseq']
                     new_hyp['yseq'][:, ys.size(1)] = int(local_best_ids[0, j])
+                    if int(local_best_ids[0, j])==self.eos_id:
+                        char=' '.join([char_list[int(x)] for x in new_hyp['yseq'][0, 1:ys.size(1)]])
+                    else:
+                        char=' '.join([char_list[int(x)] for x in new_hyp['yseq'][0, 1:]])
+                    new_hyp['lm_score'] = torch.tensor(lm_model.score(char,bos=True,eos=True)).cuda()
+                    new_hyp['total_score'] = new_hyp['am_score'] + new_hyp['lm_score']
                     # will be (2 x beam) hyps at most
                     hyps_best_kept.append(new_hyp)
 
 
                 hyps_best_kept = sorted(hyps_best_kept,
-                                        key=lambda x: x['score'],
+                                        key=lambda x: x['total_score'],
                                         reverse=True)[:beam]
             # end for hyp in hyps
             hyps = hyps_best_kept
@@ -217,11 +223,13 @@ class Decoder(nn.Module):
                 print('no hypothesis. Finish decoding.')
                 break
 
-            for hyp in hyps:
-                print('hypo: ' + ''.join([char_list[int(x)]
-                                          for x in hyp['yseq'][0, 1:]]))
+            
+            #for hyp in hyps:
+            #    print('hypo: ' + ''.join([char_list[int(x)]
+            #                              for x in hyp['yseq'][0, 1:]]))
         # end for i in range(maxlen)
-        nbest_hyps = sorted(ended_hyps, key=lambda x: x['score'], reverse=True)[
+        print(sorted(ended_hyps, key=lambda x: x['total_score'], reverse=True))
+        nbest_hyps = sorted(ended_hyps, key=lambda x: x['total_score'], reverse=True)[
             :min(len(ended_hyps), nbest)]
         # compitable with LAS implementation
         for hyp in nbest_hyps:
@@ -242,7 +250,6 @@ class DecoderLayer(nn.Module):
         dec_output, dec_slf_attn = self.slf_attn(
             dec_input, dec_input, dec_input, mask=slf_attn_mask)
         dec_output *= non_pad_mask
-
         dec_output, dec_enc_attn = self.enc_attn(
             dec_output, enc_output, enc_output, mask=dec_enc_attn_mask)
         dec_output *= non_pad_mask
