@@ -25,7 +25,8 @@ Workflow of `egs/aishell/run.sh`:
 - Stage 1: Feature Generation
 - Stage 2: Dictionary and Json Data Preparation
 - Stage 3: Network Training
-- Stage 4: Decoding
+- Stage 4: Language Model Training
+- Stage 5: Decoding
 ### More detail
 `egs/aishell/run.sh` provide example usage.
 ```bash
