@@ -1,5 +1,5 @@
 # Speech Transformer: End-to-End ASR with Transformer
-A PyTorch implementation of Speech Transformer [1][2][3], an end-to-end automatic speech recognition with [Transformer](https://arxiv.org/abs/1706.03762) [4] network, which directly converts acoustic features to character sequence using a single nueral network.
+A PyTorch implementation of Speech Transformer [1], an end-to-end automatic speech recognition with [Transformer](https://arxiv.org/abs/1706.03762) network, which directly converts acoustic features to character sequence using a single nueral network.
 
 ## Install
 - Python3 (recommend Anaconda)
@@ -58,7 +58,4 @@ When happened in training, try to reduce `batch_size`. `$ bash run.sh --batch_si
 | SpeechTransformer | 12.8 | See egs/aishell/run.sh |
 
 ## Reference
-- [1] Linhao Dong, Shuang Xu,and Bo Xu. “Speech-transformer:A no-recurrence sequence-to-sequence model for speech recognition” in ICASSP 2018
-- [2] Shiyu Zhou, Linhao Dong, et al. “Syllable-based sequence-to-sequence speech recognition with the transformer in mandarin chinese” in Interspeech 2018
-- [3] Shiyu Zhou, Linhao Dong, et al. “A comparison of modeling units in sequence-to-sequence speech recognition with the transformer on mandarin chinese” arXiv preprint arXiv:1805.06239
-- [4] Ashish Vaswani, Noam Shazeer, et al. “Attention is all you need” in NIPS 2017
+- [1] Yuanyuan Zhao, Jie Li, Xiaorui Wang, and Yan Li. "The SpeechTransformer for Large-scale Mandarin Chinese Speech Recognition." ICASSP 2019.
