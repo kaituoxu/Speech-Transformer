@@ -2,8 +2,9 @@
 A PyTorch implementation of Speech Transformer [1], an end-to-end automatic speech recognition with [Transformer](https://arxiv.org/abs/1706.03762) network, which directly converts acoustic features to character sequence using a single nueral network.
 
 ```
-Ad: Welcome to join Kwai Speech Team, make your career great! Seed your resume to xukaituo@kuaishou.com!
-广告时间：欢迎加入快手语音组，make your career great! 快发送简历到xukaituo@kuaishou.com吧！
+Ad: Welcome to join Kwai Speech Team, make your career great! Send your resume to: xukaituo [at] kuaishou [dot] com!
+广告时间：欢迎加入快手语音组，make your career great! 快发送简历到xukaituo [at] kuaishou [dot] com吧！
+広告：Kwai チームへようこそ！自分のキャリアを照らそう！レジュメをこちらへ: xukaituo [at] kuaishou [dot] com!
 ```
 
 ## Install
