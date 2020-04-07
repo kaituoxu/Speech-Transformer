@@ -172,7 +172,7 @@ if [ ${stage} -le 3 ]; then
         --warmup_steps $warmup_steps \
         --save-folder ${expdir} \
         --checkpoint $checkpoint \
-        --continue_from "$continue_from" \
+        --continue-from "$continue_from" \
         --print-freq ${print_freq} \
         --visdom $visdom \
         --visdom_lr $visdom_lr \
