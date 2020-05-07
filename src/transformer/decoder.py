@@ -48,7 +48,7 @@ class Decoder(nn.Module):
         if tgt_emb_prj_weight_sharing:
             # Share the weight matrix between target word embedding & the final logit dense layer
             self.tgt_word_prj.weight = self.tgt_word_emb.weight
-            self.x_logit_scale = (d_model ** -0.5)
+            self.x_logit_scale = (d_model ** 0.5)
         else:
             self.x_logit_scale = 1.
 
